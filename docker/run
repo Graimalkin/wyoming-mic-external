@@ -11,14 +11,18 @@ while [ -n "$1" ]; do
     shift
 done
 
-if [ -z "${device}" ]; then
+if [ -z "${device}"  && -z "${program}" ]; then
     echo "--device <NAME> is required. Run 'arecord -L' for a list (prefer plughw: devices)."
     exit 1
 fi
 
+if [ -z "${program}" ]; then
+    program="arecord -D ${device} -r 16000 -c 1 -f S16_LE -t raw"
+fi
+
 /app/script/run \
     --uri tcp://0.0.0.0:10600 \
-    --program "arecord -D ${device} -r 16000 -c 1 -f S16_LE -t raw" \
+    --program "${program}" \
     --rate 16000  \
     --width 2 \
     --channels 1 "${args[@]}"
