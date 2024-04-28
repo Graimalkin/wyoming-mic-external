@@ -11,7 +11,7 @@ while [ -n "$1" ]; do
     shift
 done
 
-if [ -z "${device}"  && -z "${program}" ]; then
+if [ -z "${device}" && -z "${program}" ]; then
     echo "--device <NAME> is required. Run 'arecord -L' for a list (prefer plughw: devices)."
     exit 1
 fi
